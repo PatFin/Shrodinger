@@ -5,17 +5,15 @@
 
 using namespace std;
 
-double Walker::randomNormalVariable()
-{
-    double randomVariable = 0.0;
-    return randomVariable;
-}
 
 void Walker::Walk()
 {
-    x += randomNormalVariable();
-    y += randomNormalVariable();
-    z += randomNormalVariable();
+  //TODO
+}
+
+double Walker::B()
+{
+  return 0.0;
 }
 
 Walker::Walker(double initX, double initY, double initZ) :
