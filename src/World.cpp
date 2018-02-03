@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "World.h"
+#include "World.hpp"
 
 int World::computeN(std::ostream & out)
 {

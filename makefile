@@ -24,7 +24,7 @@ LFLAGS=
 LOUTFLAG=-o
 #------------------------------------FILES--------------------------------------
 SRC_EXT=cpp
-HEAD_EXT=h
+HEAD_EXT=hpp
 OBJ_EXT=o
 BIN_EXT=exe
 

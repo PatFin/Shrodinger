@@ -2,7 +2,7 @@
 #include <math.h>
 #include <random>
 
-#include "Walker.h"
+#include "Walker.hpp"
 
 using namespace std;
 
@@ -14,6 +14,11 @@ double Walker::newRadius()
 double Walker::oldRadius()
 {
   return sqrt(pX*pX + pY*pY + pZ*pZ);
+}
+
+void Walker::Print(std::ostream & out)
+{
+  out << x << " " << y << " " << z << std::endl;
 }
 
 void Walker::Walk()
@@ -47,9 +52,9 @@ Walker::Walker()
   std::mt19937 e2(rd());
   std::uniform_real_distribution<> dist(0, 1);
 
-  x = dist(e2);
-  y = dist(e2);
-  z = dist(e2);
+  x = 0.5 - dist(e2);
+  y = 0.5 - dist(e2);
+  z = 0.5 - dist(e2);
 }
 
 Walker::Walker(double initX, double initY, double initZ) :
