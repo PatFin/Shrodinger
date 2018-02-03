@@ -13,7 +13,8 @@ void Walker::Walk()
 
 double Walker::B()
 {
-  return 0.0;
+  //TODO
+  return 2.0;
 }
 
 Walker::Walker(double initX, double initY, double initZ) :

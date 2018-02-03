@@ -17,8 +17,11 @@ int World::computeN()
 
   for (int i = 0; i < nbWalkers; i++)
   {
-    int n = (B[i]*nbWalkers)/(sumB*originalNb); //TODO + noise dzeta
-    N [i]=n;
+    double n = (B[i]*nbWalkers*nbWalkers)/(sumB*originalNb); //TODO + noise dzeta
+    N[i]=n;
+    std::cerr << "B[" << i << "] = " << B[i] << std::endl;
+    std::cerr << "Sum B  = " << sumB << std::endl;
+    std::cerr << "N[" << i << "] = " << N[i] << std::endl;    
     sumN += n;
   }
   return sumN;
@@ -56,8 +59,10 @@ void World::nextPopulation(int sizeNewPopulation)
   
   // Preparing for the next step
   nbWalkers = sizeNewPopulation;
-  delete B;
-  delete N;
+  delete [] walkers;
+  delete [] B;
+  delete [] N;
+  walkers = newWalkers;
   B = new double [nbWalkers];
   N = new int [nbWalkers];
 }
@@ -65,6 +70,7 @@ void World::nextPopulation(int sizeNewPopulation)
 void World::NextStep()
 {
   int newPopSize = computeN();
+  std::cerr << "New population size is : " << newPopSize << std::endl;
   nextPopulation(newPopSize);
 }
 
@@ -94,7 +100,7 @@ World::~World()
   {
     delete walkers[i];
   }
-  delete walkers;
-  delete B;
-  delete N;
+  delete [] walkers;
+  delete [] B;
+  delete [] N;
 }
