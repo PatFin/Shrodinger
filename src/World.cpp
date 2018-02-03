@@ -9,6 +9,8 @@ int World::computeN(std::ostream & out)
   for (int i = 0; i < nbWalkers; i++)
   {
     double b = walkers[i]->B();
+    std::cerr << "b : " << b << std::endl;
+
     B [i] = b;
     sumB += b;
   }
@@ -38,10 +40,10 @@ void World::nextPopulation(int sizeNewPopulation)
     } else {
       while (N [i] > 1)
       {
-	// Copy constructor when needed to multiply the instances
-	newWalkers[j] = new Walker(* walkers[i]);
-	j++;
-	N[i]--;
+        // Copy constructor when needed to multiply the instances
+        newWalkers[j] = new Walker(* walkers[i]);
+        j++;
+        N[i]--;
       }
       newWalkers[j] = walkers[i]; //No copy for the last walker
       j++;
@@ -65,18 +67,20 @@ void World::nextPopulation(int sizeNewPopulation)
   N = new int [nbWalkers];
 }
 
-void World::NextStep(std::ostream & out)
-{
-  int newPopSize = computeN(out);
-  nextPopulation(newPopSize);
-}
-
 void World::walk()
 {
   for (int i = 0; i < nbWalkers; i++)
   {
     walkers[i]->Walk();
   }
+}
+
+void World::NextStep(std::ostream & out)
+{
+  walk();
+  int newPopSize = computeN(out);
+  std::cerr << "Population size : " << newPopSize << std::endl;
+  //nextPopulation(newPopSize);
 }
 
 World::World(int size):
