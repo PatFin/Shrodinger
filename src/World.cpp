@@ -2,7 +2,7 @@
 
 #include "World.h"
 
-int World::computeN()
+int World::computeN(std::ostream & out)
 {
   int sumN=0;
   double sumB = 0.0;
@@ -19,11 +19,9 @@ int World::computeN()
   {
     double n = (B[i]*nbWalkers*nbWalkers)/(sumB*originalNb); //TODO + noise dzeta
     N[i]=n;
-    std::cerr << "B[" << i << "] = " << B[i] << std::endl;
-    std::cerr << "Sum B  = " << sumB << std::endl;
-    std::cerr << "N[" << i << "] = " << N[i] << std::endl;    
     sumN += n;
   }
+  out << sumB/nb << ";" << std::endl;
   return sumN;
 }
 
@@ -67,10 +65,9 @@ void World::nextPopulation(int sizeNewPopulation)
   N = new int [nbWalkers];
 }
 
-void World::NextStep()
+void World::NextStep(std::ostream & out)
 {
-  int newPopSize = computeN();
-  std::cerr << "New population size is : " << newPopSize << std::endl;
+  int newPopSize = computeN(out);
   nextPopulation(newPopSize);
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "Walker.h"
 
 class World {
@@ -11,12 +13,12 @@ class World {
   double * B;
   int * N;
   
-  int computeN();
+  int computeN(std::ostream & out);
   void nextPopulation(int sizeNewPopulation);
   void walk();
   
  public:
-  void NextStep();
+  void NextStep(std::ostream & out);
 
   
   World(int size);

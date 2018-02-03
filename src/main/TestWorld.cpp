@@ -3,5 +3,5 @@
 int main (void)
 {
   World world(10);
-  world.NextStep();
+  world.NextStep(std::cout);
 }
