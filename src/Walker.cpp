@@ -28,13 +28,13 @@ void Walker::Walk()
   std::default_random_engine generator (seed);
   std::normal_distribution<double> distribution (0.0,1.0);
 
-  pX = x;
-  pY = y;
-  pZ = z;
-
   x += sqrt(2*tau)*distribution(generator);
   y += sqrt(2*tau)*distribution(generator);
   z += sqrt(2*tau)*distribution(generator);
+
+  pX = x;
+  pY = y;
+  pZ = z;
 }
 
 double Walker::B()
@@ -42,8 +42,8 @@ double Walker::B()
   extern double tau;  
   double newV = 1/newRadius();
   double oldV = 1/oldRadius();
-
-  return exp(tau*(newV - oldV)/2);
+  
+  return cos(tau*(newV - oldV)/2);
 }
 
 Walker::Walker()

@@ -9,7 +9,6 @@ int World::computeN(std::ostream & out)
   for (int i = 0; i < nbWalkers; i++)
   {
     double b = walkers[i]->B();
-    std::cerr << "b : " << b << std::endl;
 
     B [i] = b;
     sumB += b;
@@ -79,8 +78,7 @@ void World::NextStep(std::ostream & out)
 {
   walk();
   int newPopSize = computeN(out);
-  std::cerr << "Population size : " << newPopSize << std::endl;
-  //nextPopulation(newPopSize);
+  nextPopulation(newPopSize);
 }
 
 World::World(int size):
