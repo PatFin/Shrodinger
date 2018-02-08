@@ -10,7 +10,8 @@ int main (void)
   World world(WALKER_NUMBER);
   for (int i = 0; i < STEP_NUMBER; i++)
   {
-    world.NextStep(std::cout);
+    double avgB = world.NextStep();
+    std::cout << i << ";" << avgB << ";" << std::endl;
   }
   return 0;
 }
