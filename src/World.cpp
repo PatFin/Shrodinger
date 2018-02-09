@@ -2,14 +2,13 @@
 
 #include "World.hpp"
 
-int World::computeN(std::ostream & out)
+int World::computeN()
 {
   int sumN=0;
   double sumB = 0.0;
   for (int i = 0; i < nbWalkers; i++)
   {
     double b = walkers[i]->B();
-    std::cerr << "b : " << b << std::endl;
 
     B [i] = b;
     sumB += b;
@@ -23,7 +22,9 @@ int World::computeN(std::ostream & out)
     N[i]=n;
     sumN += n;
   }
-  out << sumB/nb << ";" << std::endl;
+
+  avgB = sumB/nb;
+
   return sumN;
 }
 
@@ -75,16 +76,16 @@ void World::walk()
   }
 }
 
-void World::NextStep(std::ostream & out)
+double World::NextStep()
 {
   walk();
-  int newPopSize = computeN(out);
-  std::cerr << "Population size : " << newPopSize << std::endl;
-  //nextPopulation(newPopSize);
+  int newPopSize = computeN();
+  nextPopulation(newPopSize);
+  return avgB;
 }
 
 World::World(int size):
-  nbWalkers(size),originalWalkerNb(size)
+  avgB(-1.0),nbWalkers(size),originalWalkerNb(size)
 {
   B = new double [nbWalkers];
   N = new int [nbWalkers];
