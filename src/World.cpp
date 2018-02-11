@@ -1,29 +1,18 @@
 #include <iostream>
+#include <random>
 
 #include "World.hpp"
 
 int World::computeN()
 {
+  static std::random_device rd;
+  static std::mt19937 e2(rd());
+  static std::uniform_real_distribution<> dist(0, 1);
   int sumN=0;
-  double sumB = 0.0;
   for (int i = 0; i < nbWalkers; i++)
   {
-    double b = walkers[i]->B();
-
-    B [i] = b;
-    sumB += b;
+    B [i] = walkers[i]->W() + dist(e2);
   }
-  double nb = nbWalkers;
-  double originalNb = originalWalkerNb;
-
-  for (int i = 0; i < nbWalkers; i++)
-  {
-    double n = (B[i]*nbWalkers*nbWalkers)/(sumB*originalNb); //TODO + noise dzeta
-    N[i]=n;
-    sumN += n;
-  }
-
-  avgB = sumB/nb;
 
   return sumN;
 }
@@ -57,7 +46,7 @@ void World::nextPopulation(int sizeNewPopulation)
     std::cerr << "--Warning new pop size is " << sizeNewPopulation
 	      << " but was filled until " << j << std::endl;
   }
-  
+
   // Preparing for the next step
   nbWalkers = sizeNewPopulation;
   delete [] walkers;

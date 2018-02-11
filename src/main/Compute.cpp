@@ -1,6 +1,7 @@
 #include "World.hpp"
 
 double tau = 0.01;
+double E = 1.0;
 
 const int WALKER_NUMBER = 1000;
 const int STEP_NUMBER = 10000;
