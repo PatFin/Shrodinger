@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 #include "Walker.hpp"
 
 class World {
@@ -11,18 +9,19 @@ class World {
 
   Walker ** walkers;
   int nbWalkers;
-  int originalWalkerNb;
+  int initNbWalkers;
   double * B;
   int * N;
-  
-  int computeN();
+
+  int computeNextPopSize();
   void nextPopulation(int sizeNewPopulation);
   void walk();
-  
+
  public:
+  int WalkersCount();
   double NextStep();
 
-  
+
   World(int size);
   virtual ~World();
 

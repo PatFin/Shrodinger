@@ -11,10 +11,11 @@ class Walker{
   double oldRadius();
 
  public :
-  double V();
+  double newV();
+  double oldV();
   void Print(std::ostream & out);
   void Walk();
-  double W();
+  double B();
 
   Walker(double initX, double initY, double initZ);
   Walker();

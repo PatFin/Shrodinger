@@ -1,17 +1,31 @@
 #include <iostream>
+#include <math.h>
 #include <random>
 
 #include "World.hpp"
 
-int World::computeN()
+int World::computeNextPopSize()
 {
+  // We first extract all the B's
+  avgB = 0.0;
+  for (int i = 0; i < nbWalkers; i++)
+  {
+    double b = walkers[i]->B();
+    B [i] = b;
+    avgB += b;
+  }
+
+  // Preparing some intermediate values for the computation of N
+  avgB /= nbWalkers;
   static std::random_device rd;
   static std::mt19937 e2(rd());
   static std::uniform_real_distribution<> dist(0, 1);
   int sumN=0;
+
   for (int i = 0; i < nbWalkers; i++)
   {
-    B [i] = walkers[i]->W() + dist(e2);
+    N [i] = (B[i]/avgB) + dist(e2); //Cast in integer TODO add the population compensation coef
+    sumN += N [i];
   }
 
   return sumN;
@@ -65,23 +79,30 @@ void World::walk()
   }
 }
 
+int World::WalkersCount()
+{
+  return nbWalkers;
+}
+
 double World::NextStep()
 {
+  extern double tau;
   walk();
-  int newPopSize = computeN();
+  int newPopSize = computeNextPopSize();
   nextPopulation(newPopSize);
-  return avgB;
+
+  return -log(avgB)/tau;
 }
 
 World::World(int size):
-  avgB(-1.0),nbWalkers(size),originalWalkerNb(size)
+  avgB(-1.0),nbWalkers(size),initNbWalkers(size)
 {
   B = new double [nbWalkers];
   N = new int [nbWalkers];
   walkers = new Walker * [nbWalkers];
   for (int i = 0; i < nbWalkers; i++)
   {
-    walkers[i] = new Walker(0.0,0.0,0.0);
+    walkers[i] = new Walker(); //TODO setup factory design
   }
 }
 

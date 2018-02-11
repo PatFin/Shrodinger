@@ -6,14 +6,18 @@
 
 using namespace std;
 
-double Walker::V()
+double Walker::newV()
 {
-  return sqrt(x*x + y*y + z*z);
+  //TODO refactor
+  double radius =  sqrt(x*x + y*y + z*z);
+  return -1/radius;
 }
 
-double Walker::oldRadius()
+double Walker::oldV()
 {
-  return sqrt(pX*pX + pY*pY + pZ*pZ);
+  //TODO refactor
+  double radius = sqrt(pX*pX + pY*pY + pZ*pZ);
+  return -1/radius;
 }
 
 void Walker::Print(std::ostream & out)
@@ -26,7 +30,7 @@ void Walker::Walk()
   extern double tau;
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   std::default_random_engine generator (seed);
-  std::normal_distribution<double> distribution (0.0,1.0);
+  std::normal_distribution<double> distribution (0.0,1.0);  //TODO to check if this is the correct distribution
   pX = x;
   pY = y;
   pZ = z;
@@ -37,12 +41,11 @@ void Walker::Walk()
 
 }
 
-double Walker::W()
+double Walker::B()
 {
-  extern double E;
   extern double tau;
 
-  return exp(- (V() - E));
+  return exp(- tau*(newV() - oldV())/2);
 }
 
 Walker::Walker()
