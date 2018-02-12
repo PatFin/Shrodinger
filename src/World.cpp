@@ -14,7 +14,7 @@ double World::averageV()
   return V/nbWalkers;
 }
 
-int World::computeNextPopSize()
+double World::computeNextPopSize()
 {
   // We first extract all the B's
   avgB = 0.0;
@@ -30,7 +30,7 @@ int World::computeNextPopSize()
   static std::random_device rd;
   static std::mt19937 e2(rd());
   static std::uniform_real_distribution<> dist(0, 1);
-  int sumN=0;
+  double sumN=0.0;
 
   for (int i = 0; i < nbWalkers; i++)
   {
@@ -81,6 +81,34 @@ void World::walk()
     walkers[i]->Walk();
   }
 }
+
+int * World::Distribution(int nbPartitions, double maxRadius)
+{
+  //Init
+  int * walkerCount = new int [nbPartitions];
+  for (int i = 0; i < nbPartitions; i ++)
+  {
+    walkerCount[i]=0;
+  }
+  //Filling the histogram
+  for(int i=0; i<nbWalkers; i++)
+  {
+    int index=0;
+    double r = walkers[i]->NewRadius();
+    if(r > maxRadius)
+    {
+      index = nbPartitions-1;
+    } else
+    {
+      index = nbPartitions*(r/maxRadius);
+    }
+    
+    walkerCount[index] ++;
+  }
+
+  return walkerCount;
+}
+
 
 int World::WalkersCount()
 {

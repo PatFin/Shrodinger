@@ -14,11 +14,11 @@ class World {
   int * N;
 
   double averageV();
-  int computeNextPopSize();
+  double computeNextPopSize();
   void nextPopulation(double sizeNewPopulation);
   void walk();
-
  public:
+  int * Distribution(int nbPartitions, double maxRadius);
   int WalkersCount();
   double NextStep();
 
