@@ -13,17 +13,24 @@ int main (void)
     double E = world.NextStep();
     int walkerNb = world.WalkersCount();
     std::cout << i << ";" << walkerNb << ";" << E << ";" << std::endl;
+
+    if ( i % 1000 == 0)
+    {
+      int partitionNumber = 50;
+      double maxRadius = 50.0;
+      int * distribution = world.Distribution(partitionNumber, maxRadius);
+      for (int i=0; i<partitionNumber;i++)
+      {
+        std::cerr << distribution[i] << ";" ;
+      }
+      std::cerr << std::endl;
+
+      delete [] distribution;
+
+    }
+
   }
 
-  int partitionNumber = 50;
-  double maxRadius = 50.0;
-  int * distribution = world.Distribution(partitionNumber, maxRadius);
-  for (int i=0; i<partitionNumber;i++)
-  {
-    std::cerr << distribution[i] << ";" << std::endl;
-  }
-
-  delete [] distribution;
   
   return 0;
 }
