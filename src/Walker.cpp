@@ -9,7 +9,7 @@ using namespace std;
 double Walker::B()
 {
   extern double tau;
-  return exp(- ((tau*(OldV() - NewV()))/2));
+  return exp(- ((tau*(OldV() + NewV()))/2));
 }
 
 double Walker::NewRadius()
