@@ -8,13 +8,14 @@ class World {
   double avgB;
 
   Walker ** walkers;
-  int nbWalkers;
-  int initNbWalkers;
+  double nbWalkers;
+  double initNbWalkers;
   double * B;
   int * N;
 
+  double averageV();
   int computeNextPopSize();
-  void nextPopulation(int sizeNewPopulation);
+  void nextPopulation(double sizeNewPopulation);
   void walk();
 
  public:
@@ -22,7 +23,7 @@ class World {
   double NextStep();
 
 
-  World(int size);
+  World(double size);
   virtual ~World();
 
 };

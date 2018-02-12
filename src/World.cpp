@@ -4,6 +4,16 @@
 
 #include "World.hpp"
 
+double World::averageV()
+{
+  double V;
+  for (int i = 0; i < nbWalkers; i++)
+  {
+    V = walkers[i]->NewV();
+  }
+  return V/nbWalkers;
+}
+
 int World::computeNextPopSize()
 {
   // We first extract all the B's
@@ -24,17 +34,17 @@ int World::computeNextPopSize()
 
   for (int i = 0; i < nbWalkers; i++)
   {
-    N [i] = (B[i]/avgB) + dist(e2); //Cast in integer TODO add the population compensation coef
+    N [i] = (B[i]/avgB)*(initNbWalkers/nbWalkers) + dist(e2);
     sumN += N [i];
   }
 
   return sumN;
 }
 
-void World::nextPopulation(int sizeNewPopulation)
+void World::nextPopulation(double sizeNewPopulation)
 {
   // Creating our new population
-  Walker ** newWalkers = new Walker * [sizeNewPopulation];
+  Walker ** newWalkers = new Walker * [(int)sizeNewPopulation];
   int j=0; //Index of the next new walker in the new population
   for(int i=0; i < nbWalkers; i++)
   {
@@ -54,21 +64,14 @@ void World::nextPopulation(int sizeNewPopulation)
     }
   }
 
-  //Safety Check
-  if (j != sizeNewPopulation)
-  {
-    std::cerr << "--Warning new pop size is " << sizeNewPopulation
-	      << " but was filled until " << j << std::endl;
-  }
-
   // Preparing for the next step
   nbWalkers = sizeNewPopulation;
   delete [] walkers;
   delete [] B;
   delete [] N;
   walkers = newWalkers;
-  B = new double [nbWalkers];
-  N = new int [nbWalkers];
+  B = new double [(int)nbWalkers];
+  N = new int [(int)nbWalkers];
 }
 
 void World::walk()
@@ -94,15 +97,15 @@ double World::NextStep()
   return -log(avgB)/tau;
 }
 
-World::World(int size):
+World::World(double size):
   avgB(-1.0),nbWalkers(size),initNbWalkers(size)
 {
-  B = new double [nbWalkers];
-  N = new int [nbWalkers];
-  walkers = new Walker * [nbWalkers];
+  B = new double [(int)nbWalkers];
+  N = new int [(int)nbWalkers];
+  walkers = new Walker * [(int)nbWalkers];
   for (int i = 0; i < nbWalkers; i++)
   {
-    walkers[i] = new Walker(); //TODO setup factory design
+    walkers[i] = new Walker();
   }
 }
 
