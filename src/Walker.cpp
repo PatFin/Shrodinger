@@ -6,6 +6,12 @@
 
 using namespace std;
 
+double Walker::B()
+{
+  extern double tau;
+  return exp(- ((tau*(OldV() - NewV()))/2));
+}
+
 double Walker::NewRadius()
 {
   return sqrt(x*x + y*y + z*z);
@@ -47,11 +53,8 @@ void Walker::Walk()
 
 }
 
-double Walker::B()
-{
-  extern double tau;
-  return exp(- ((tau*(OldV() - NewV()))/2));
-}
+Walker::Walker(double initX, double initY, double initZ) :
+  x(initX), y(initY), z(initZ) {}
 
 Walker::Walker()
 {
@@ -63,8 +66,5 @@ Walker::Walker()
   y = 0.5 - dist(e2);
   z = 0.5 - dist(e2);
 }
-
-Walker::Walker(double initX, double initY, double initZ) :
-  x(initX), y(initY), z(initZ) {}
 
 Walker::~Walker(){}

@@ -109,12 +109,6 @@ int * World::Distribution(int nbPartitions, double maxRadius)
   return walkerCount;
 }
 
-
-int World::WalkersCount()
-{
-  return nbWalkers;
-}
-
 double World::NextStep()
 {
   extern double tau;
@@ -123,6 +117,11 @@ double World::NextStep()
   nextPopulation(newPopSize);
 
   return -log(avgB)/tau;
+}
+
+int World::WalkersCount()
+{
+  return nbWalkers;
 }
 
 World::World(double size):
